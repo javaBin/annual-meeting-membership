@@ -28,6 +28,10 @@ ktor {
     }
 }
 
+tasks.test {
+    useJUnitPlatform()
+}
+
 repositories {
     mavenCentral()
 }
