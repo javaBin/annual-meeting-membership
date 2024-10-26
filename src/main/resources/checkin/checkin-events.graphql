@@ -1,4 +1,4 @@
-query events($customerId: Int!) {
+query events($customerId: Int!, $nameStartsWith: String!) {
     events: allEventRegistrations(
         customerId: $customerId
         reportFilters: {
@@ -8,7 +8,7 @@ query events($customerId: Int!) {
                     rule: AND
                     field: EVENT_NAME
                     operator: STARTS_WITH
-                    value: "JavaZone 2024"
+                    value: $nameStartsWith
                 }
                 {
                     rule: AND_NOT
