@@ -1,28 +1,27 @@
-package javabin.no.member_lookup.integrations.checkin
+package javabin.no.member_lookup.ticket
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
-import org.junit.jupiter.api.Assertions.*
-
-class CheckinServiceTest {
+class TicketServiceTest {
 
     private val event = Event(
         name = "JavaZone X",
         id = 1
     )
 
-    private val checkinAdapterFake = CheckinAdapterFake().apply {
+    private val ticketAdapterFake = TicketAdapterFake().apply {
         addEvent(event)
         repeat(10) {
             addTicketToEvent(EventTicket(email = "participant$it@email.com", ticketType = TicketType.REGULAR), event.id)
         }
     }
 
-    private val checkinService = CheckinService(adapter = checkinAdapterFake)
+    private val ticketService = TicketService(adapter = ticketAdapterFake)
 
     @Test
     fun `should filter out flexible tickets`() {
-        checkinAdapterFake.addTicketToEvent(
+        ticketAdapterFake.addTicketToEvent(
             ticket = EventTicket(
                 email = "flexibleticket@java.no",
                 ticketType = TicketType.PARTNER,
@@ -30,17 +29,17 @@ class CheckinServiceTest {
             ),
             eventId = event.id
         )
-        assertEquals(11, checkinAdapterFake.findTickets(eventId = event.id).size)
-        assertEquals(10, checkinService.tickets(eventId = event.id).size)
+        assertEquals(11, ticketAdapterFake.findTickets(eventId = event.id).size)
+        assertEquals(10, ticketService.tickets(eventId = event.id).size)
     }
 
     @Test
     fun events() {
-        assertEquals(1, checkinService.events().size)
+        assertEquals(1, ticketService.events().size)
     }
 
     @Test
     fun tickets() {
-        assertEquals(10, checkinService.tickets(checkinService.events().first().id).size)
+        assertEquals(10, ticketService.tickets(ticketService.events().first().id).size)
     }
 }

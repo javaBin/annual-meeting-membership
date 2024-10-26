@@ -1,6 +1,6 @@
-package javabin.no.member_lookup.integrations.checkin
+package javabin.no.member_lookup.ticket
 
-interface CheckinAdapter {
+interface TicketAdapter {
     fun findEvents(): List<Event>
     fun findTickets(eventId: Long): List<EventTicket>
 }

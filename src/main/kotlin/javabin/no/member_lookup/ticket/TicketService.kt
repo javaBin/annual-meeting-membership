@@ -1,6 +1,6 @@
-package javabin.no.member_lookup.integrations.checkin
+package javabin.no.member_lookup.ticket
 
-class CheckinService(private val adapter: CheckinAdapter) {
+class TicketService(private val adapter: TicketAdapter) {
     fun events() = adapter.findEvents()
     fun tickets(eventId: Long): List<EventTicket> {
         val tickets = adapter.findTickets(eventId = eventId)

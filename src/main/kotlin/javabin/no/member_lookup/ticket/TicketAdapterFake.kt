@@ -1,6 +1,6 @@
-package javabin.no.member_lookup.integrations.checkin
+package javabin.no.member_lookup.ticket
 
-class CheckinAdapterFake : CheckinAdapter {
+class TicketAdapterFake : TicketAdapter {
     private val events: MutableList<Event> = mutableListOf()
     private val eventTickets: MutableMap<Long, MutableList<EventTicket>> = mutableMapOf()
 
