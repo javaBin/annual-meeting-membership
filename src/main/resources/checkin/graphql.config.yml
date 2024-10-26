@@ -1,0 +1,2 @@
+schema: https://api.checkin.no/graphql
+documents: '**/*.graphql'

@@ -1,0 +1,31 @@
+query events($customerId: Int!) {
+    events: allEventRegistrations(
+        customerId: $customerId
+        reportFilters: {
+            rule: AND
+            conditions: [
+                {
+                    rule: AND
+                    field: EVENT_NAME
+                    operator: STARTS_WITH
+                    value: "JavaZone 2024"
+                }
+                {
+                    rule: AND_NOT
+                    field: EVENT_NAME
+                    operator: CONTAINS
+                    value: "Partnership"
+                }
+            ]
+        }
+    ) {
+        data {
+            name
+            id
+            tickets {
+                id
+                name
+            }
+        }
+    }
+}

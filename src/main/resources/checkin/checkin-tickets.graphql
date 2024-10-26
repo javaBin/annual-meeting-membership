@@ -1,0 +1,11 @@
+query tickets($customerId: Int!, $eventId: Int!) {
+    eventTickets(customer_id: $customerId, id: $eventId) {
+        category
+        event_name
+        crm {
+            first_name
+            last_name
+            email
+        }
+    }
+}
