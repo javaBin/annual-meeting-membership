@@ -43,7 +43,11 @@ dependencies {
     testImplementation("io.ktor:ktor-server-test-host-jvm")
 
     // Http Client
+    implementation("io.ktor:ktor-client-content-negotiation")
     implementation("io.ktor:ktor-client-cio")
+
+    // Serialization
+    implementation("io.ktor:ktor-serialization-kotlinx-json")
 
     // Logging
     implementation("ch.qos.logback:logback-classic:$logback_version")

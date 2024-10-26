@@ -1,5 +1,6 @@
 package javabin.no.member_lookup.ticket
 
+import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
@@ -20,7 +21,7 @@ class TicketServiceTest {
     private val ticketService = TicketService(adapter = ticketAdapterFake)
 
     @Test
-    fun `should filter out flexible tickets`() {
+    fun `should filter out flexible tickets`() = runBlocking {
         ticketAdapterFake.addTicketToEvent(
             ticket = EventTicket(
                 email = "flexibleticket@java.no",
@@ -34,12 +35,12 @@ class TicketServiceTest {
     }
 
     @Test
-    fun events() {
+    fun events() = runBlocking{
         assertEquals(1, ticketService.events().size)
     }
 
     @Test
-    fun tickets() {
+    fun tickets() = runBlocking {
         assertEquals(10, ticketService.tickets(ticketService.events().first().id).size)
     }
 }

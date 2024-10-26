@@ -4,9 +4,9 @@ class TicketAdapterFake : TicketAdapter {
     private val events: MutableList<Event> = mutableListOf()
     private val eventTickets: MutableMap<Long, MutableList<EventTicket>> = mutableMapOf()
 
-    override fun findEvents() = events.toList()
+    override suspend fun findEvents() = events.toList()
 
-    override fun findTickets(eventId: Long) = eventTickets[eventId] ?: emptyList()
+    override suspend fun findTickets(eventId: Long) = eventTickets[eventId] ?: emptyList()
 
     fun addTicketToEvent(ticket: EventTicket, eventId: Long): Boolean {
         if (events.find { it.id == eventId } == null) {

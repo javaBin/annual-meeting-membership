@@ -1,8 +1,8 @@
 package javabin.no.member_lookup.ticket
 
 interface TicketAdapter {
-    fun findEvents(): List<Event>
-    fun findTickets(eventId: Long): List<EventTicket>
+    suspend fun findEvents(): List<Event>
+    suspend fun findTickets(eventId: Long): List<EventTicket>
 }
 
 data class EventTicket(val email: String, val ticketType: TicketType, val category: String = "")
