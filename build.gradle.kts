@@ -5,6 +5,7 @@ val logstash_version: String by project
 
 plugins {
     kotlin("jvm") version "2.0.21"
+    kotlin("plugin.serialization") version "2.0.21"
     id("io.ktor.plugin") version "3.0.0"
 }
 
@@ -40,6 +41,7 @@ dependencies {
     // Server
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
+    implementation("io.ktor:ktor-server-content-negotiation")
     testImplementation("io.ktor:ktor-server-test-host-jvm")
 
     // Http Client
