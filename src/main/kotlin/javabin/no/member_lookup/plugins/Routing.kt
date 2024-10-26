@@ -1,4 +1,4 @@
-package javabin.no.plugins
+package javabin.no.member_lookup.plugins
 
 import io.ktor.server.application.*
 import io.ktor.server.response.*

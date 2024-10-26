@@ -12,7 +12,7 @@ group = "javabin.no"
 version = "0.0.1"
 
 application {
-    mainClass.set("javabin.no.ApplicationKt")
+    mainClass.set("javabin.no.member_lookup.ApplicationKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
