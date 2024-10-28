@@ -9,7 +9,7 @@ query events($customerId: Int!, $nameStartsWith: String!) {
                     field: EVENT_NAME
                     operator: STARTS_WITH
                     value: $nameStartsWith
-                }
+                },
                 {
                     rule: AND_NOT
                     field: EVENT_NAME

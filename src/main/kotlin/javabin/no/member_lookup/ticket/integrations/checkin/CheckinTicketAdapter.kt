@@ -5,7 +5,6 @@ import io.ktor.client.call.*
 import io.ktor.client.engine.*
 import io.ktor.client.plugins.*
 import io.ktor.client.plugins.contentnegotiation.*
-import io.ktor.client.plugins.logging.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
@@ -37,7 +36,6 @@ class CheckinTicketAdapter(private val adapterConfig: CheckinTicketAdapterConfig
                 ignoreUnknownKeys = true
             })
         }
-        install(Logging)
 
         defaultRequest {
             this.url(this@CheckinTicketAdapter.url)
@@ -45,18 +43,21 @@ class CheckinTicketAdapter(private val adapterConfig: CheckinTicketAdapterConfig
     }
 
     override suspend fun findEvents(): List<Event> {
+        val requestBody = """
+                {
+                    "query": "${eventsGraphqlDocument?.replace("\n", "\\n")?.replace("\"", "\\\"")}",
+                    "operationName": "events",
+                     "variables": {
+                        "customerId": ${adapterConfig.customerId},
+                        "nameStartsWith": "JavaZone 2024"
+                     }
+                }
+            """.trimIndent()
+
         val response = httpClient.post {
             contentType(ContentType.Application.Json)
             setBody(
-                """
-                {
-                    "query": "$eventsGraphqlDocument",
-                     "variables": "{
-                        "customerId": ${adapterConfig.customerId},
-                        "nameStartsWith": "JavaZone 2024",
-                     }"
-                }
-            """.trimIndent()
+                requestBody
             )
         }
         val data: CheckinEventsResponseDTO = response.body()
@@ -69,11 +70,12 @@ class CheckinTicketAdapter(private val adapterConfig: CheckinTicketAdapterConfig
             setBody(
                 """
             {
-                "query": "$ticketsGraphqlDocument",
-                "variables": "{
-                    "customerId": "${adapterConfig.customerId}",
+                "query": "${ticketsGraphqlDocument?.replace("\n", "\\n")?.replace("\"", "\\\"")}",
+                "operationName": "tickets",
+                "variables": {
+                    "customerId": ${adapterConfig.customerId},
                     "eventId": $eventId
-                }"
+                }
             }
             """.trimIndent()
             )

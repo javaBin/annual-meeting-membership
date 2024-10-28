@@ -54,7 +54,6 @@ dependencies {
     // Logging
     implementation("ch.qos.logback:logback-classic:$logback_version")
     runtimeOnly("net.logstash.logback:logstash-logback-encoder:$logstash_version")
-    implementation("io.ktor:ktor-client-logging")
 
     // Testing
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
