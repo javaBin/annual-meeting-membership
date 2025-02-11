@@ -1,4 +1,4 @@
-package javabin.no.member_lookup.ticket
+package no.javabin.member_lookup.ticket
 
 class TicketService(private val adapter: TicketAdapter) {
     suspend fun events() = adapter.findEvents()

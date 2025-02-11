@@ -1,4 +1,4 @@
-package javabin.no.member_lookup.ticket
+package no.javabin.member_lookup.ticket
 
 import kotlinx.serialization.Serializable
 

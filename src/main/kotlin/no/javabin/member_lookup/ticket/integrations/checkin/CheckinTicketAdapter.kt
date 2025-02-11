@@ -1,4 +1,4 @@
-package javabin.no.member_lookup.ticket.integrations.checkin
+package no.javabin.member_lookup.ticket.integrations.checkin
 
 import io.ktor.client.*
 import io.ktor.client.call.*
@@ -8,11 +8,11 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.serialization.kotlinx.json.*
-import javabin.no.member_lookup.ticket.Event
-import javabin.no.member_lookup.ticket.EventTicket
-import javabin.no.member_lookup.ticket.TicketAdapter
-import javabin.no.member_lookup.ticket.TicketType
 import kotlinx.serialization.json.Json
+import no.javabin.member_lookup.ticket.Event
+import no.javabin.member_lookup.ticket.EventTicket
+import no.javabin.member_lookup.ticket.TicketAdapter
+import no.javabin.member_lookup.ticket.TicketType
 
 data class CheckinTicketAdapterConfig(
     val clientId: String,
@@ -80,7 +80,7 @@ class CheckinTicketAdapter(private val adapterConfig: CheckinTicketAdapterConfig
             """.trimIndent()
             )
         }
-        val data: CheckinTicketsResponsDTO = response.body()
+        val data: no.javabin.member_lookup.ticket.integrations.checkin.CheckinTicketsResponsDTO = response.body()
         return data.data.eventTickets.map {
             EventTicket(
                 email = it.crm.email,

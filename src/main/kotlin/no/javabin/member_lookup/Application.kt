@@ -1,10 +1,10 @@
-package javabin.no.member_lookup
+package no.javabin.member_lookup
 
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.netty.*
 import io.ktor.server.plugins.contentnegotiation.*
-import javabin.no.member_lookup.plugins.configureRouting
+import no.javabin.member_lookup.plugins.configureRouting
 
 
 fun main(args: Array<String>) = EngineMain.main(args)

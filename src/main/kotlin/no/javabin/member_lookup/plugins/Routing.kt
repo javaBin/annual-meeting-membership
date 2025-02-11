@@ -1,15 +1,15 @@
-package javabin.no.member_lookup.plugins
+package no.javabin.member_lookup.plugins
 
 import io.ktor.client.engine.cio.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import javabin.no.member_lookup.ticket.TicketService
-import javabin.no.member_lookup.ticket.integrations.checkin.CheckinTicketAdapter
-import javabin.no.member_lookup.ticket.integrations.checkin.CheckinTicketAdapterConfig
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import no.javabin.member_lookup.ticket.TicketService
+import no.javabin.member_lookup.ticket.integrations.checkin.CheckinTicketAdapter
+import no.javabin.member_lookup.ticket.integrations.checkin.CheckinTicketAdapterConfig
 
 fun Application.configureRouting() {
     routing {

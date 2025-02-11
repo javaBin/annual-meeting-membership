@@ -1,20 +1,20 @@
-package javabin.no.member_lookup.ticket.integrations.checkin
+package no.javabin.member_lookup.ticket.integrations.checkin
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CheckinTicketsResponsDTO(val data: CheckinEventTicketsResponsDTO)
+data class CheckinTicketsResponsDTO(val data: no.javabin.member_lookup.ticket.integrations.checkin.CheckinEventTicketsResponsDTO)
 
 @Serializable
-data class CheckinEventTicketsResponsDTO(val eventTickets: List<CheckinEventTicketDTO>)
+data class CheckinEventTicketsResponsDTO(val eventTickets: List<no.javabin.member_lookup.ticket.integrations.checkin.CheckinEventTicketDTO>)
 
 @Serializable
 data class CheckinEventTicketDTO(
     val category: String,
     @SerialName("event_name")
     val eventName: String,
-    val crm: CrmDTO,
+    val crm: no.javabin.member_lookup.ticket.integrations.checkin.CrmDTO,
 )
 
 @Serializable

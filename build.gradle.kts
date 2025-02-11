@@ -9,11 +9,11 @@ plugins {
     id("io.ktor.plugin") version "3.0.0"
 }
 
-group = "javabin.no"
+group = "no.javabin"
 version = "0.0.1"
 
 application {
-    mainClass.set("javabin.no.member_lookup.ApplicationKt")
+    mainClass.set("no.javabin.member_lookup.ApplicationKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -47,6 +47,7 @@ dependencies {
     // Http Client
     implementation("io.ktor:ktor-client-content-negotiation")
     implementation("io.ktor:ktor-client-cio")
+    implementation("io.ktor:ktor-client-core")
 
     // Serialization
     implementation("io.ktor:ktor-serialization-kotlinx-json")
