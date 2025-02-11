@@ -1,6 +1,7 @@
 package no.javabin.member_lookup.plugins
 
 import io.ktor.client.engine.cio.*
+import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -34,6 +35,11 @@ fun Routing.isMemberRoute() = route("membership") {
 
     get {
         coroutineScope {
+            val email = call.request.queryParameters["email"] ?: return@coroutineScope call.respond(
+                HttpStatusCode.BadRequest,
+                "We need a valid email to check for membership"
+            )
+
             val events = ticketService.events()
 
             val tickets = events.map { event ->
@@ -41,7 +47,14 @@ fun Routing.isMemberRoute() = route("membership") {
                     ticketService.tickets(eventId = event.id)
                 }
             }.awaitAll().flatten()
-            call.respond(tickets)
+
+            val hasMembership = tickets.find { it.email == email } != null
+
+            if (hasMembership) {
+                call.respond(HttpStatusCode.OK)
+            } else {
+                call.respond(HttpStatusCode.NotFound)
+            }
         }
     }
 }
