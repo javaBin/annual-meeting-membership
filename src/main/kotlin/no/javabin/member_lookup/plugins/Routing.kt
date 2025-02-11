@@ -31,6 +31,9 @@ fun Routing.isMemberRoute() = route("membership") {
         httpEngine = CIO.create(),
     )
 
+    val javabinHeroesEmails = environment.config.property("javabin.heroes").getString().split("\n")
+    application.log.info("Read ${javabinHeroesEmails.size} javaBin heroes into memory")
+
     val ticketService = TicketService(ticketAdapter)
 
     get {
@@ -42,13 +45,19 @@ fun Routing.isMemberRoute() = route("membership") {
 
             val events = ticketService.events()
 
-            val tickets = events.map { event ->
+            application.log.info("Found ${events.size} events, reading ticket emails for each event")
+
+            val ticketParticipantEmails = events.map { event ->
                 async {
                     ticketService.tickets(eventId = event.id)
                 }
-            }.awaitAll().flatten()
+            }.awaitAll().flatten().map { ticket -> ticket.email }
 
-            val hasMembership = tickets.find { it.email == email } != null
+            val allEmails = ticketParticipantEmails + javabinHeroesEmails
+
+            application.log.info("Found ${allEmails.size} javaBin members, now checking membership")
+
+            val hasMembership = allEmails.find { it == email } != null
 
             if (hasMembership) {
                 call.respond(HttpStatusCode.OK)
