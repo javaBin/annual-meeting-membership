@@ -80,7 +80,7 @@ class CheckinTicketAdapter(private val adapterConfig: CheckinTicketAdapterConfig
             """.trimIndent()
             )
         }
-        val data: no.javabin.member_lookup.ticket.integrations.checkin.CheckinTicketsResponsDTO = response.body()
+        val data: CheckinTicketsResponsDTO = response.body()
         return data.data.eventTickets.map {
             EventTicket(
                 email = it.crm.email,
