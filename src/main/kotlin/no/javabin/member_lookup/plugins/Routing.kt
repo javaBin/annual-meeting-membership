@@ -8,6 +8,7 @@ import io.ktor.server.routing.*
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import no.javabin.member_lookup.ticket.TicketService
 import no.javabin.member_lookup.ticket.integrations.checkin.CheckinTicketAdapter
 import no.javabin.member_lookup.ticket.integrations.checkin.CheckinTicketAdapterConfig
@@ -36,28 +37,34 @@ fun Routing.isMemberRoute() = route("membership") {
 
     val ticketService = TicketService(ticketAdapter)
 
+    val allEmails = mutableListOf<String>()
+
+    runBlocking {
+        val events = ticketService.events()
+
+        application.log.info("Found ${events.size} events, reading ticket emails for each event")
+
+        val ticketParticipantEmails = events.map { event ->
+            async {
+                ticketService.tickets(eventId = event.id)
+            }
+        }.awaitAll().flatten().map { ticket -> ticket.email }
+
+        allEmails.addAll(ticketParticipantEmails + javabinHeroesEmails)
+    }
+
     get {
         coroutineScope {
+            val membershipEmails = allEmails.toSet()
+
             val email = call.request.queryParameters["email"] ?: return@coroutineScope call.respond(
                 HttpStatusCode.BadRequest,
                 "We need a valid email to check for membership"
             )
 
-            val events = ticketService.events()
+            application.log.info("Found ${membershipEmails.size} javaBin members, now checking membership")
 
-            application.log.info("Found ${events.size} events, reading ticket emails for each event")
-
-            val ticketParticipantEmails = events.map { event ->
-                async {
-                    ticketService.tickets(eventId = event.id)
-                }
-            }.awaitAll().flatten().map { ticket -> ticket.email }
-
-            val allEmails = ticketParticipantEmails + javabinHeroesEmails
-
-            application.log.info("Found ${allEmails.size} javaBin members, now checking membership")
-
-            val hasMembership = allEmails.find { it == email } != null
+            val hasMembership = membershipEmails.find { it == email } != null
 
             if (hasMembership) {
                 call.respond(HttpStatusCode.OK)
