@@ -30,7 +30,8 @@ fun Routing.isMemberRoute() = route("membership") {
         httpEngine = CIO.create(),
     )
 
-    val javabinHeroesEmails = environment.config.property("javabin.heroes").getString().split("\n")
+    val javabinHeroesEmails =
+        environment.config.propertyOrNull("javabin.heroes")?.getString()?.split("\n") ?: emptyList()
     application.log.info("Read ${javabinHeroesEmails.size} javaBin heroes into memory")
 
     val ticketService = TicketService(ticketAdapter)
