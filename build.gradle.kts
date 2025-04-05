@@ -42,6 +42,7 @@ dependencies {
     implementation("io.ktor:ktor-server-core-jvm")
     implementation("io.ktor:ktor-server-netty-jvm")
     implementation("io.ktor:ktor-server-content-negotiation")
+    implementation("io.ktor:ktor-server-cors")
     testImplementation("io.ktor:ktor-server-test-host-jvm")
 
     // Http Client
